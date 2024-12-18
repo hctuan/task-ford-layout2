@@ -278,7 +278,10 @@ const SidebarTrigger = React.forwardRef<
 			data-sidebar="trigger"
 			variant="ghost"
 			size="icon"
-			className={cn("h-7 w-7", className)}
+			className={cn(
+				`h-7 w-7 ${iscollapsed ? " bg-[#ECF0F9] hover:bg-white " : " bg-white hover:bg-[#ECF0F9] "}`,
+				className,
+			)}
 			onClick={(event) => {
 				onClick?.(event);
 				toggleSidebar();
@@ -286,9 +289,9 @@ const SidebarTrigger = React.forwardRef<
 			{...props}
 		>
 			{iscollapsed ? (
-				<ChevronRight color="#203461" />
+				<ChevronRight color="#3f3f4680" />
 			) : (
-				<ChevronLeft color="#203461" />
+				<ChevronLeft color="#3f3f4680" />
 			)}
 			<span className="sr-only">Toggle Sidebar</span>
 		</Button>
@@ -573,7 +576,11 @@ const SidebarMenuButton = React.forwardRef<
 				data-sidebar="menu-button"
 				data-size={size}
 				data-active={isActive}
-				className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+				className={cn(
+					sidebarMenuButtonVariants({ variant, size }),
+					className,
+					"hover:bg-slate-300",
+				)}
 				{...props}
 			/>
 		);

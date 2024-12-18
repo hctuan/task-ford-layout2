@@ -2,7 +2,9 @@ import {
 	BellRing,
 	Calendar1Icon,
 	ChevronDown,
+	CircleDollarSign,
 	Clock,
+	Download,
 	FileBarChart2Icon,
 	Filter,
 	Folder,
@@ -12,6 +14,8 @@ import {
 	Inbox,
 	KanbanSquareIcon,
 	MessageCircleMoreIcon,
+	MoreHorizontal,
+	Pin,
 	Plus,
 	SearchIcon,
 	Settings,
@@ -25,6 +29,7 @@ import {
 import * as React from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import "./App.css";
+import CollapsedLogo from "./assets/collapsed_logo.png";
 import Logo from "./assets/logo.png";
 import {
 	Accordion,
@@ -71,6 +76,12 @@ import {
 	ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "./components/ui/dropdown-menu";
 import { Search2 } from "./components/ui/search2";
 
 export const description = "An interactive bar chart";
@@ -103,7 +114,7 @@ function App() {
 							</div>
 						</div>
 						<div className="relative flex-1 bg-white rounded-tl-[12px]">
-							<SidebarTrigger className=" absolute left-[-8px] top-[48px] z-10 h-[54px] w-[20px] bg-white rounded-full hover:bg-[#ECF0F9]" />
+							<SidebarTrigger className=" backdrop-blur-md absolute left-[-8px] top-[48px] z-10 h-[54px] w-[16px] rounded-full " />
 							<MainScreen />
 						</div>
 					</div>
@@ -134,16 +145,6 @@ export function AppSidebar() {
 
 	const items2 = [
 		{
-			title: "Goals",
-			url: "#",
-			icon: Goal,
-		},
-		{
-			title: "Report",
-			url: "#",
-			icon: FileBarChart2Icon,
-		},
-		{
 			title: "Timelog",
 			url: "#",
 			icon: Clock,
@@ -163,11 +164,6 @@ export function AppSidebar() {
 			url: "#",
 			icon: UserRoundCheckIcon,
 		},
-		{
-			title: "Team",
-			url: "#",
-			icon: Users,
-		},
 	];
 
 	const { state } = useSidebar();
@@ -177,7 +173,11 @@ export function AppSidebar() {
 		<Sidebar className="bg-[#ECF0F9] " collapsible="icon">
 			<SidebarContent className="gap-0">
 				<div className="h-[56px] p-2 flex items-center">
-					<img className="h-[32px]" src={Logo} alt="logo" />
+					<img
+						className="h-[32px]"
+						src={isExpaned ? Logo : CollapsedLogo}
+						alt="logo"
+					/>
 				</div>
 				<SidebarGroup>
 					<SidebarGroupContent>
@@ -198,7 +198,10 @@ export function AppSidebar() {
 
 				<SidebarGroup>
 					<SidebarGroupContent>
-						<SidebarGroupLabel>Features</SidebarGroupLabel>
+						<div className="flex items-center pr-[8px]">
+							<SidebarGroupLabel className="flex-1">Features</SidebarGroupLabel>
+							<MoreHorizontal size={16} color="#203461" />
+						</div>
 						<SidebarMenu>
 							{items2.map((item) => (
 								<SidebarMenuItem key={item.title}>
@@ -210,6 +213,50 @@ export function AppSidebar() {
 									</SidebarMenuButton>
 								</SidebarMenuItem>
 							))}
+
+							<DropdownMenu>
+								<DropdownMenuTrigger className="m-0 p-0 !bg-transparent !border-none !outline-none">
+									<SidebarMenuItem key={"more"}>
+										<SidebarMenuButton asChild>
+											{/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
+											<a href="#">
+												<MoreHorizontal color="#0084FF" />
+												<span>More</span>
+											</a>
+										</SidebarMenuButton>
+									</SidebarMenuItem>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent
+									className="w-[200px]"
+									align="end"
+									side="right"
+								>
+									<DropdownMenuItem className="flex">
+										<span className="flex-1 flex gap-2 items-center">
+											<Users size={16} /> Team
+										</span>{" "}
+										<Pin />
+									</DropdownMenuItem>
+									<DropdownMenuItem className="flex">
+										<span className="flex-1 flex gap-2 items-center">
+											<Goal size={16} /> Goals
+										</span>{" "}
+										<Pin />
+									</DropdownMenuItem>
+									<DropdownMenuItem className="flex">
+										<span className="flex-1 flex gap-2 items-center">
+											<FileBarChart2Icon size={16} /> Report
+										</span>{" "}
+										<Pin />
+									</DropdownMenuItem>
+									<DropdownMenuItem className="flex">
+										<span className="flex-1 flex gap-2 items-center">
+											<CircleDollarSign size={16} /> Billing
+										</span>{" "}
+										<Pin />
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
 						</SidebarMenu>
 					</SidebarGroupContent>
 				</SidebarGroup>
@@ -255,7 +302,8 @@ export function AppSidebar() {
 				</Accordion> */}
 
 				{isExpaned && (
-					<div className="px-[16px] mt-4">
+					<div className="px-[12px] mt-2 mb-4">
+						<SidebarGroupLabel>Workspaces</SidebarGroupLabel>
 						<Card className="border-none shadow-none bg-[#F7F9FC]">
 							<Accordion
 								type="single"
@@ -265,7 +313,7 @@ export function AppSidebar() {
 							>
 								<AccordionItem value="workspace">
 									<AccordionTrigger className="p-0 m-0 px-[16px]">
-										<div className="flex py-[8px] px-0 items-center gap-[8px] ">
+										<div className="flex py-[16px] px-0 items-center gap-[8px] ">
 											<SunIcon size={18} color="#0084FF" />
 											<span className="text-[#203461]">Main Workspace</span>
 										</div>
@@ -432,7 +480,10 @@ const MainScreen = () => {
 
 				<div className="flex gap-1">
 					<Button variant="secondary" className="p-3 m-0">
-						<Share2Icon /> Share
+						<Share2Icon />
+					</Button>
+					<Button variant="secondary" className="p-3 m-0">
+						<Download />
 					</Button>
 					<Button variant="secondary" className="p-3 m-0">
 						<Settings2 />
@@ -440,7 +491,7 @@ const MainScreen = () => {
 				</div>
 			</div>
 
-			<div className="flex gap-2 items-center px-[24px] pt-[16px]">
+			<div className="flex gap-2 items-center px-[24px]">
 				<div className="text-[24px] text-black font-[500]">
 					Design TaskFord Q1.3
 				</div>
