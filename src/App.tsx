@@ -1,17 +1,26 @@
 import {
 	BellRing,
+	Calendar1Icon,
 	ChevronDown,
+	Clock,
+	FileBarChart2Icon,
 	Filter,
 	Folder,
+	Goal,
+	HelpCircle,
 	Home,
 	Inbox,
 	KanbanSquareIcon,
+	MessageCircleMoreIcon,
 	Plus,
 	SearchIcon,
 	Settings,
 	Settings2,
 	Share2Icon,
+	Sheet,
 	SunIcon,
+	UserRoundCheckIcon,
+	Users,
 } from "lucide-react";
 import * as React from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
@@ -39,6 +48,7 @@ import {
 	SidebarContent,
 	SidebarGroup,
 	SidebarGroupContent,
+	SidebarGroupLabel,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
@@ -60,118 +70,48 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Menu3 } from "./Menu3";
-// import { NavigationMenuDemo } from "./Menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
+import { Search2 } from "./components/ui/search2";
 
 export const description = "An interactive bar chart";
 
 function App() {
 	return (
 		<div className="h-screen w-screen bg-[#ECF0F9] ">
-			<div className="h-[56px] w-full fixed z-50 bg-[#ECF0F9] flex items-center border-b-[#E0E7F5] border-b">
-				<div className="flex gap-1 flex-1 items-center">
-					<div className="h-[56px] p-2 flex items-center">
-						<img className="h-[32px]" src={Logo} alt="logo" />
-					</div>
-
-					{/* <MenuList /> */}
-					{/* <NavigationMenuDemo /> */}
-					{/* <Menu2 /> */}
-					<Menu3 />
-
-					<Button className="bg-[#0084FF] ml-3">
-						<Plus /> Create
-					</Button>
-				</div>
-
-				<div className="flex gap-1 px-[16px]">
-					<Button variant="ghost" className="p-3 m-0">
-						<SearchIcon />
-					</Button>
-					<Button variant="ghost" className="p-3 m-0">
-						<Settings />
-					</Button>
-					<Avatar>
-						<AvatarImage src="https://github.com/shadcn.png" />
-						<AvatarFallback>CN</AvatarFallback>
-					</Avatar>
-				</div>
-			</div>
-
-			<div className="w-full fixed top-[68px] left-0 right-0">
+			<div className="w-full fixed top-[0px] left-0 right-0">
 				<SidebarProvider>
 					<AppSidebar />
-					<main className="flex-1 bg-white rounded-tl-[12px] relative">
-						<SidebarTrigger className=" absolute left-[-8px] top-[48px] z-10 h-[54px] w-[20px] bg-white rounded-full hover:bg-[#ECF0F9]" />
-						<MainScreen />
-					</main>
+					<div className="flex-1 relative flex flex-col">
+						<div className="h-[56px] z-50 bg-[#ECF0F9] flex items-center ">
+							<div className="flex gap-1 flex-1 items-center">
+								<div className="flex gap-1 items-center">
+									<Search2 />
+									<Button className="bg-[#0084FF] ml-3">
+										<Plus /> Create
+									</Button>
+								</div>
+							</div>
+
+							<div className="flex gap-4 items-center gap-1 px-[16px]">
+								<MessageCircleMoreIcon size={20} />
+								<HelpCircle size={20} />
+								<Settings size={20} />
+								<Avatar>
+									<AvatarImage src="https://github.com/shadcn.png" />
+									<AvatarFallback>CN</AvatarFallback>
+								</Avatar>
+							</div>
+						</div>
+						<div className="relative flex-1 bg-white rounded-tl-[12px]">
+							<SidebarTrigger className=" absolute left-[-8px] top-[48px] z-10 h-[54px] w-[20px] bg-white rounded-full hover:bg-[#ECF0F9]" />
+							<MainScreen />
+						</div>
+					</div>
 				</SidebarProvider>
 			</div>
 		</div>
 	);
 }
-
-// const MenuList = () => {
-// 	const [active, setActive] = useState(1);
-// 	const menuItems = [
-// 		{ label: "Work", value: 1 },
-// 		{
-// 			label: "Timesheets",
-// 			value: 2,
-// 			subs: [
-// 				{ label: "Timelog", value: 21 },
-// 				{ label: "Timesheet", value: 22 },
-// 				{ label: "Timesheet Approval", value: 23 },
-// 			],
-// 		},
-// 		{
-// 			label: "Vacation",
-// 			value: 3,
-// 			subs: [
-// 				{ label: "My Vacation", value: 31 },
-// 				{ label: "Vacation Approval", value: 32 },
-// 			],
-// 		},
-// 		{ label: "Reports", value: 4 },
-// 		{ label: "Teams", value: 5 },
-// 		{ label: "ORKs", value: 6 },
-// 	];
-
-// 	return (
-// 		<div className="flex gap-2 h-[56px] items-end ml-4">
-// 			{menuItems.map((e) => {
-// 				return (
-// 					// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-// 					<div
-// 						className={`cursor-pointer text-[16px] border-b-[2px] text-[#203461] ${active === e.value ? "border-b-[#203461] font-bold" : " border-b-[#FFFFFF00]"} `}
-// 						key={e.value}
-// 					>
-// 						<Menu2 subs={e.subs} onClick={() => setActive(e.value)}>
-// 							<div>{e.label}</div>
-// 						</Menu2>
-// 						{/* <DropdownMenu key={e.value}>
-// 							<DropdownMenuTrigger
-// 								className="flex items-center gap-1 w-full h-full p-[12px] "
-// 								onClick={() => setActive(e.value)}
-// 							>
-// 								{e.label}
-// 								{e.subs && <ChevronDown size={12} />}
-// 							</DropdownMenuTrigger>
-// 							{e.subs && (
-// 								<DropdownMenuContent className="p-2">
-// 									{e.subs.map((e) => (
-// 										<DropdownMenuItem key={e.value}>{e.label}</DropdownMenuItem>
-// 									))}
-// 								</DropdownMenuContent>
-// 							)}
-// 						</DropdownMenu> */}
-// 					</div>
-// 				);
-// 			})}
-// 		</div>
-// 	);
-// };
 
 export function AppSidebar() {
 	const items = [
@@ -192,12 +132,53 @@ export function AppSidebar() {
 		},
 	];
 
+	const items2 = [
+		{
+			title: "Goals",
+			url: "#",
+			icon: Goal,
+		},
+		{
+			title: "Report",
+			url: "#",
+			icon: FileBarChart2Icon,
+		},
+		{
+			title: "Timelog",
+			url: "#",
+			icon: Clock,
+		},
+		{
+			title: "Timesheet",
+			url: "#",
+			icon: Sheet,
+		},
+		{
+			title: "Vacation",
+			url: "#",
+			icon: Calendar1Icon,
+		},
+		{
+			title: "Approval",
+			url: "#",
+			icon: UserRoundCheckIcon,
+		},
+		{
+			title: "Team",
+			url: "#",
+			icon: Users,
+		},
+	];
+
 	const { state } = useSidebar();
 	const isExpaned = state === "expanded";
 
 	return (
 		<Sidebar className="bg-[#ECF0F9] " collapsible="icon">
-			<SidebarContent>
+			<SidebarContent className="gap-0">
+				<div className="h-[56px] p-2 flex items-center">
+					<img className="h-[32px]" src={Logo} alt="logo" />
+				</div>
 				<SidebarGroup>
 					<SidebarGroupContent>
 						<SidebarMenu>
@@ -215,8 +196,66 @@ export function AppSidebar() {
 					</SidebarGroupContent>
 				</SidebarGroup>
 
+				<SidebarGroup>
+					<SidebarGroupContent>
+						<SidebarGroupLabel>Features</SidebarGroupLabel>
+						<SidebarMenu>
+							{items2.map((item) => (
+								<SidebarMenuItem key={item.title}>
+									<SidebarMenuButton asChild>
+										<a href={item.url}>
+											<item.icon color="#0084FF" />
+											<span>{item.title}</span>
+										</a>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							))}
+						</SidebarMenu>
+					</SidebarGroupContent>
+				</SidebarGroup>
+
+				{/* <Accordion
+					type="single"
+					collapsible
+					className="remove-childen-border"
+					defaultValue="workspace"
+				>
+					<AccordionItem value="workspace">
+						<AccordionTrigger className="p-0 m-0 px-[16px]">
+							<div className="flex py-[8px] px-0 items-center gap-[8px] ">
+								<SquareMousePointer size={18} color="#0084FF" />
+								<span className="text-[#203461]">Features</span>
+							</div>
+						</AccordionTrigger>
+
+						<AccordionContent className="">
+							{["Timelog", "Timesheets", "Vacation", "Approval"].map((e) => {
+								return (
+									<div
+										key={e}
+										className="flex justify-between ml-[48px] mr-[12px] px-[12px] py-[8px] gap-2 cursor-pointer hover:bg-[#D9E1F2] rounded-md"
+									>
+										<div className="flex flex-1 gap-2 items-center overflow-hidden">
+											<KanbanSquareIcon
+												className="w-[18px] !transform-none"
+												size={18}
+												color="#0084FF"
+											/>
+											<span className="flex-1 whitespace-nowrap truncate">
+												{e}
+											</span>
+										</div>
+
+										<div className="w-[32px] text-right">12</div>
+									</div>
+								);
+							})}
+						</AccordionContent>
+					</AccordionItem>
+				</Accordion> */}
+
 				{isExpaned && (
-					<div className="px-[16px]">
+					<div className="px-[16px] mt-4">
 						<Card className="border-none shadow-none bg-[#F7F9FC]">
 							<Accordion
 								type="single"
